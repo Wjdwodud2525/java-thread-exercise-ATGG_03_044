@@ -21,15 +21,21 @@ import java.util.Objects;
  */
 @Slf4j
 // TODO #1 CounterThread 클래스가 Thread 클래스를 상속하도록 수정합니다.
-public class CounterThread {
+public class CounterThread extends Thread{
     private final long countMaxSize;
 
     private long count;
 
     public CounterThread(String name, long countMaxSize) {
         // TODO #2 name이 null이거나 공백 문자열인 경우 IllegalArgumentException을 발생시킵니다.
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("name is null or empty");
+        }
 
         // TODO #3 countMaxSize가 0 이하인 경우 IllegalArgumentException을 발생시킵니다.
+        if(countMaxSize <= 0){
+            throw new IllegalArgumentException("countMaxSize is less than 0");
+        }
 
 
         this.setName(name);
@@ -49,6 +55,13 @@ public class CounterThread {
          */
 
         do {
+            try{
+                Thread.sleep(1000);
+                log.info("thread:[{}], count:[{}]", this.getName(), ++count);
+            }catch (InterruptedException e){
+                log.error("Thread interrupted", e);
+            }
+            count++;
 
         } while (count < countMaxSize);
     }
