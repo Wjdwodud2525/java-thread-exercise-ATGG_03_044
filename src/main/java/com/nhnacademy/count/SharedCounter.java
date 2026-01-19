@@ -13,7 +13,12 @@
 package com.nhnacademy.count;
 
 import java.util.concurrent.Semaphore;
+import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 공유 카운터를 사용하는 스레드 작업 예제 애플리케이션
+ */
+@Slf4j
 /**
  * 여러 스레드에서 공유하여 사용하는 카운터 클래스
  * 세마포어를 사용하여 스레드 안전성을 보장합니다.
@@ -45,7 +50,8 @@ public class SharedCounter {
         }
         this.count = count;
         // TODO #1-1 세마포어를 생성합니다. (동시에 하나의 스레드만 접근할 수 있도록 permits 매개변수를 설정하세요.)
-        semaphore = null;
+
+        semaphore = new Semaphore(1);
     }
 
             /**
@@ -61,8 +67,15 @@ public class SharedCounter {
             2. 필요한 작업을 수행합니다.
             3. 작업이 완료되면 semaphore.release()를 호출하여 허가를 반환합니다.
          */
+                try{
+                    semaphore.acquire();
+                }catch(InterruptedException e){
+                    log.error("error");
+                }
+                long sum = count;
+                semaphore.release();
 
-        return count;
+        return sum;
     }
 
             /**
@@ -76,7 +89,13 @@ public class SharedCounter {
         /* TODO #1-3 카운트를 1 증가시키고(count = count + 1) 증가된 값을 반환합니다.
            1-2와 같이 세마포어를 이용하여 동기화를 구현합니다.
         */
+                try{
+                    semaphore.acquire();
+                }catch(InterruptedException e){
+                    log.error("error",e);
+                }
         count = count + 1;
+                semaphore.release();
         return count;
     }
 
@@ -91,7 +110,13 @@ public class SharedCounter {
         /* TODO #1-4 카운트를 1 감소시키고(count = count - 1) 감소된 값을 반환합니다.
           1-2와 같이 세마포어를 이용하여 동기화를 구현합니다.
         */
+                try{
+                    semaphore.acquire();
+                }catch(InterruptedException e){
+                    log.error("error",e);
+                }
         count = count - 1;
+                semaphore.release();
         return count;
     }
 }
