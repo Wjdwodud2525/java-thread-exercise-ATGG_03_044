@@ -22,7 +22,7 @@ public class App
     public static void main(String[] args)
     {
         // TODO #1 CounterHandler 객체를 생성합니다. 최대 카운트 값(countMaxSize)을 10으로 설정합니다.
-        CounterHandler counterHandler;
+        CounterHandler counterHandler = new CounterHandler(countMaxSize);
 
         // TODO #2 threadA 생성 시 counterHandler 객체를 생성자 매개변수로 전달합니다.
         Thread threadA;
