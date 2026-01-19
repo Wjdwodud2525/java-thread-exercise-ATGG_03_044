@@ -21,10 +21,15 @@ public class Counter {
 
     public Counter(long countMaxSize) {
         // TODO #1 countMaxSize가 0보다 작으면 IllegalArgumentException 예외를 발생시킵니다.
+        if(countMaxSize < 0){
+            throw new IllegalArgumentException();
+        }
 
         // TODO #2 this.countMaxSize 필드를 초기화합니다.
+        this.countMaxSize = countMaxSize;
 
         // TODO #3 this.count 값을 0으로 초기화합니다.
+        this.count = 0;
 
     }
 
@@ -36,6 +41,11 @@ public class Counter {
               Thread.sleep 메서드를 사용하여 스레드를 1초간 일시 중지시키세요.
               참고: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.html#sleep(java.time.Duration)
             */
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException e){
+                log.error(e.getMessage());
+            }
 
             count++;
 
@@ -44,7 +54,8 @@ public class Counter {
                 스레드 이름은 Thread.currentThread().getName()으로 가져옵니다.
                 예시: "name:my-thread, count:1"
              */
-
+            Thread currentThread = Thread.currentThread();
+            log.info("name: {}, count: {}" ,currentThread.getName(), count);
         } while (count < countMaxSize);
     }
 }
