@@ -61,7 +61,6 @@ public class CounterThread extends Thread{
             }catch (InterruptedException e){
                 log.error("Thread interrupted", e);
             }
-            count++;
 
         } while (count < countMaxSize);
     }
