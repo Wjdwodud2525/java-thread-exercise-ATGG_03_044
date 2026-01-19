@@ -57,7 +57,7 @@ public class CounterThread extends Thread{
         do {
             try{
                 Thread.sleep(1000);
-                log.info("thread:[{}], count:[{}]", this.getName(), ++count);
+                log.info("thread:[{}], count:[{}]", this.getName(), count++);
             }catch (InterruptedException e){
                 log.error("Thread interrupted", e);
             }
