@@ -45,8 +45,21 @@ public class App
         log.debug("threadB-state:{}", threadB.getState());
 
         // TODO #1 메인 스레드에서 3초 후 threadA에 인터럽트를 발생시킵니다.
+        try{
+            Thread.sleep(3000);
+        }catch(InterruptedException e){
+            log.error("Thread sleep error", e);
+        }
+        threadA.interrupt();
 
         // TODO #3 메인 스레드가 threadA, threadB가 종료될 때까지 대기합니다. Thread.yield()를 사용합니다.
+        try{
+            threadA.join();
+            threadB.join();
+        }catch(InterruptedException e){
+            log.error("Thread join error", e);
+        }
+        Thread.yield();
 
         // threadA와 threadB의 현재 상태를 출력합니다.
         log.debug("threadA 상태: {}", threadA.getState());
