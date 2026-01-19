@@ -40,7 +40,7 @@ public class CounterHandler implements Runnable  {
             count++;
             log.debug("스레드: {}, 상태: {}, 카운트: {}", Thread.currentThread().getName(), Thread.currentThread().getState(), count);
             // TODO #2 Thread.yield()를 사용하여 현재 수행 중인 작업을 다른 스레드에게 양보하세요.
-
+            Thread.yield();
         } while (count < countMaxSize);
     }
 }
