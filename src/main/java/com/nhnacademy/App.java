@@ -28,7 +28,7 @@ public class App
 
     // TODO #1 모니터로 사용할 객체를 생성합니다.
     /** 스레드 동기화를 위한 모니터 객체 */
-    public static Object monitor;
+    public static Object monitor = new Object();
 
     /**
      * 애플리케이션의 진입점
@@ -40,7 +40,7 @@ public class App
     {
 
         // TODO #2 counterHandlerA 객체를 생성합니다. 최대 카운트 값(countMaxSize)을 10으로 설정하고 모니터 객체를 전달합니다.
-        CounterHandler counterHandlerA = null;
+        CounterHandler counterHandlerA = new CounterHandler(10, monitor);
 
         // threadA 생성 시 counterHandlerA 객체를 생성자 매개변수로 전달합니다.
         Thread threadA = new Thread(counterHandlerA);
@@ -54,10 +54,23 @@ public class App
         log.debug("threadA 상태: {}", threadA.getState());
 
         // TODO #3 메인 스레드에서 2초 후 monitor 객체를 이용하여 대기 중인 threadA를 깨웁니다.
+        try{
+            Thread.sleep(2000);
+        }catch(InterruptedException e){
+            log.error("Thread sleep error", e);
+        }
+        synchronized(monitor){
+            monitor.notify();
+        }
 
 
         // 메인 스레드가 threadA가 종료될 때까지 대기합니다. Thread.yield()를 사용합니다.
         do {
+            try{
+                threadA.join();
+            }catch(InterruptedException e){
+                log.error("Thread join error", e);
+            }
             Thread.yield();
         } while (threadA.isAlive());
 
