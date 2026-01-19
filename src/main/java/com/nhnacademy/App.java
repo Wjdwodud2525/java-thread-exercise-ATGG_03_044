@@ -31,36 +31,45 @@ public class App
     public static void main(String[] args)
     {
         // TODO #1 counterHandlerA 객체를 생성합니다. 최대 카운트 값(countMaxSize)을 10으로 설정합니다.
-        CounterHandler counterHandlerA;
+        CounterHandler counterHandlerA = new CounterHandler(10);
         // TODO #2 threadA 생성 시 counterHandlerA 객체를 생성자 매개변수로 전달합니다.
-        Thread threadA = null;
+        Thread threadA = new Thread(counterHandlerA);
         // TODO #3 threadA의 이름을 'my-counter-A'로 설정합니다.
+        threadA.setName("my-counter-A");
 
         log.debug("threadA 상태: {}", threadA.getState());
 
 
         // TODO #4 counterHandlerB 객체를 생성합니다. 최대 카운트 값(countMaxSize)을 10으로 설정합니다.
-        CounterHandler counterHandlerB;
+        CounterHandler counterHandlerB = new CounterHandler(10);
         // TODO #5 threadB 생성 시 counterHandlerB 객체를 생성자 매개변수로 전달합니다.
-        Thread threadB = null;
+        Thread threadB = new Thread(counterHandlerB);
         // TODO #6 threadB의 이름을 'my-counter-B'로 설정합니다.
-
+        threadB.setName("my-counter-B");
         log.debug("threadB 상태: {}", threadB.getState());
 
         // TODO #7 threadA의 start() 메서드를 호출하여 스레드를 실행합니다.
-
+        threadA.start();
 
         // TODO #8 threadA 작업이 완료될 때까지 메인 스레드가 대기하도록 합니다.
-
+        try{
+            threadA.join();
+        }catch(InterruptedException e){
+            log.error(e.getMessage(), e);
+        }
         log.debug("threadA 상태: {}", threadA.getState());
 
         // TODO #9 threadB의 start() 메서드를 호출하여 스레드를 실행합니다.
-
+        threadB.start();
         // TODO #10 threadB 작업이 완료될 때까지 메인 스레드가 대기하도록 합니다.
-
+        try{
+            threadB.join();
+        }catch(InterruptedException e){
+            log.error(e.getMessage(), e);
+        }
         log.debug("threadB 상태: {}", threadB.getState());
 
         // TODO #11 'Application exit!' 메시지를 출력합니다.
-
+        log.info("Appliacation exit!");
     }
 }
