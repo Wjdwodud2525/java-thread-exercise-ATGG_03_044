@@ -42,10 +42,12 @@ public class CounterHandler implements Runnable{
              3. 출력 형식: "thread:[스레드명], count:[카운트값]"
                 예시: "thread:my-thread, count:1"
          */
-
         do {
             try{
                 Thread.sleep(1000);
+                log.info("thread:[{}], count:[{}]", Thread.currentThread().getName(), count++);
+            }catch (InterruptedException e){
+                log.error("Thread Interrupted Exception", e);
             }
 
         } while (count < countMaxSize);
