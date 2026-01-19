@@ -25,8 +25,11 @@ public class App
         // TODO #6 현재 실행 중인 메인 스레드의 이름을 "my-thread"로 설정합니다.
         // 참고: 메인 스레드는 Thread.currentThread()로 접근할 수 있습니다.
         Thread main = Thread.currentThread();
+        main.setName("my-thread");
+        System.out.println(main.getName());
 
         // TODO #7 Counter 객체를 생성하고, countMaxSize 값을 10으로 설정한 후 run 메서드를 호출합니다.
-
+        Counter counter = new Counter(10);
+        counter.run();
     }
 }
